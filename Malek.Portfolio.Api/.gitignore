@@ -1,0 +1,23 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# Rider
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local secrets (never commit real connection strings or keys)
+appsettings.Local.json
+appsettings.*.local.json
