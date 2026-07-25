@@ -1,0 +1,29 @@
+databases:
+  - name: malek-portfolio-db
+    plan: free
+    databaseName: malek_portfolio
+    user: malek_portfolio
+
+services:
+  - type: web
+    name: malek-portfolio-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Malek.Portfolio.Api/Dockerfile
+    dockerContext: ./Malek.Portfolio.Api
+    healthCheckPath: /api/profile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: malek-portfolio-db
+          property: connectionString
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__Issuer
+        value: MalekPortfolio
+      - key: Jwt__Audience
+        value: MalekPortfolio
+      - key: Cors__AllowedOrigins__0
+        value: https://REPLACE-WITH-YOUR-VERCEL-URL.vercel.app
+      - key: Seed__AdminPassword
+        sync: false

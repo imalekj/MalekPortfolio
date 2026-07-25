@@ -9,11 +9,38 @@ using Malek.Portfolio.Api.Data;
 using Malek.Portfolio.Api.Services;
 using Malek.Portfolio.Api.Models;
 using Scalar.AspNetCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
+static string NormalizeConnectionString(string? raw)
+{
+    if (string.IsNullOrWhiteSpace(raw))
+        throw new InvalidOperationException("ConnectionStrings:DefaultConnection is missing.");
+
+    if (!raw.StartsWith("postgres://") && !raw.StartsWith("postgresql://"))
+        return raw;
+
+    // Render (and most hosts) expose the managed Postgres connection string as a
+    // postgres:// URI, but Npgsql expects keyword=value pairs — convert it here.
+    var uri = new Uri(raw);
+    var userInfo = uri.UserInfo.Split(':', 2);
+    var csBuilder = new NpgsqlConnectionStringBuilder
+    {
+        Host = uri.Host,
+        Port = uri.Port > 0 ? uri.Port : 5432,
+        Database = uri.AbsolutePath.TrimStart('/'),
+        Username = Uri.UnescapeDataString(userInfo[0]),
+        Password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "",
+        SslMode = SslMode.Require
+    };
+    return csBuilder.ConnectionString;
+}
+
+var connectionString = NormalizeConnectionString(builder.Configuration.GetConnectionString("DefaultConnection"));
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
