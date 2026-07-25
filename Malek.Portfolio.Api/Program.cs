@@ -131,9 +131,10 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 
-    if (!context.Users.Any())
+    var adminPassword = builder.Configuration["Seed:AdminPassword"] ?? "Malek@2026!";
+    var adminUser = context.Users.FirstOrDefault(u => u.Email == "malekjaber39@gmail.com");
+    if (adminUser is null)
     {
-        var adminPassword = builder.Configuration["Seed:AdminPassword"] ?? "Malek@2026!";
         context.Users.Add(new ApplicationUser
         {
             FullName = "Malek Jaber",
@@ -141,6 +142,13 @@ using (var scope = app.Services.CreateScope())
             Password = BCrypt.Net.BCrypt.HashPassword(adminPassword),
             Role = UserRole.Admin
         });
+    }
+    else
+    {
+        // Keeps the live admin password in sync with Seed:AdminPassword on every
+        // restart, since the initial blueprint deploy seeds it once and there is
+        // no in-app "change password" screen yet.
+        adminUser.Password = BCrypt.Net.BCrypt.HashPassword(adminPassword);
     }
 
     if (!context.Profiles.Any())
