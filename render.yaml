@@ -24,6 +24,6 @@ services:
       - key: Jwt__Audience
         value: MalekPortfolio
       - key: Cors__AllowedOrigins__0
-        value: https://REPLACE-WITH-YOUR-VERCEL-URL.vercel.app
+        value: https://malek-portfolio-psi.vercel.app
       - key: Seed__AdminPassword
         sync: false
