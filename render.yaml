@@ -24,6 +24,10 @@ services:
       - key: Jwt__Audience
         value: MalekPortfolio
       - key: Cors__AllowedOrigins__0
+        value: https://www.malekjaber.dev
+      - key: Cors__AllowedOrigins__1
+        value: https://malekjaber.dev
+      - key: Cors__AllowedOrigins__2
         value: https://malek-portfolio-psi.vercel.app
       - key: Seed__AdminPassword
         sync: false
