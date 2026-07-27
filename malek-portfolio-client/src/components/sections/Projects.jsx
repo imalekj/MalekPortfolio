@@ -32,23 +32,26 @@ export default function Projects() {
                     <img
                       src={project.imageUrl}
                       alt={project.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:-translate-y-2 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-secondary/40 transition-transform duration-500 group-hover:-translate-y-2">
+                    <div className="flex h-full w-full items-center justify-center text-secondary/40">
                       <ImageOff size={32} />
                     </div>
                   )}
-                  <div className="absolute inset-0 flex items-end justify-center gap-3 bg-gradient-to-t from-accent/90 via-accent/10 to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                </div>
+
+                {(project.gitHubUrl || project.liveUrl) && (
+                  <div className="flex items-center gap-3 border-b border-white/[0.06] bg-background/60 px-5 py-3">
                     {project.gitHubUrl && (
                       <a
                         href={project.gitHubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-background text-white transition-transform duration-300 hover:scale-110"
-                        aria-label="GitHub repository"
+                        className="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs text-secondary transition-colors duration-200 hover:border-accent/50 hover:text-white"
                       >
-                        <GitHubIcon size={18} />
+                        <GitHubIcon size={14} />
+                        Code
                       </a>
                     )}
                     {project.liveUrl && (
@@ -56,14 +59,14 @@ export default function Projects() {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-background text-white transition-transform duration-300 hover:scale-110"
-                        aria-label="Live demo"
+                        className="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs text-secondary transition-colors duration-200 hover:border-accent/50 hover:text-white"
                       >
-                        <ExternalLink size={18} />
+                        <ExternalLink size={14} />
+                        Live Demo
                       </a>
                     )}
                   </div>
-                </div>
+                )}
 
                 <div className="p-6">
                   <h3 className="font-heading text-lg font-medium text-white">
