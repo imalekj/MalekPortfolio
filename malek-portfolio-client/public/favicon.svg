@@ -1,4 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0B0B0D"/>
-  <text x="32" y="43" font-family="Space Grotesk, sans-serif" font-size="30" font-weight="700" fill="#C5A059" text-anchor="middle">M</text>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D9BC82"/>
+      <stop offset="100%" stop-color="#C5A059"/>
+    </linearGradient>
+  </defs>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="#0B0B0D"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.5"/>
+  <text
+    x="32.5"
+    y="34"
+    font-family="'Space Grotesk', Arial, Helvetica, sans-serif"
+    font-size="32"
+    font-weight="700"
+    fill="url(#gold)"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >M</text>
 </svg>
